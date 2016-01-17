@@ -4,12 +4,54 @@
     <title><%= title %></title>
     <link rel="stylesheet" href="/stylesheets/font-awesome-4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/stylesheets/weather-icons-master/css/weather-icons.min.css">
+    <!--Import Google Icon Font-->
+     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+     <!--Import materialize.css-->
+     <link type="text/css" rel="stylesheet" href="/stylesheets/materialize.min.css"  media="screen,projection"/>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <i id="icon-light-status" class="wi wi-day-sunny"></i>
+    <i id="icon-light-status" class="wi wi-day-sunny icon-day-color"></i>
     <span id="lbl-temp-reading">72&#x2109;</span>
+    <span id="btn-toggle-daynight">
+      <a class="btn-floating btn-large waves-effect waves-light red"><i class="wi wi-night-alt-cloudy"></i></a>
+    </span>
+    <div class="padding-content"><h4>Piquarium Cam</h4></div>
     <div id="vid-tank"></div>
+    <div id="lbl-day-lenght" class="centered-content">Sunrise Today: <b><%= sunrise %></b>  Sunset Today: <b><%= sunset %></b></div>
+    <div id="controls-manual" class="centered-content">
+      <a class="waves-effect waves-light btn btn-margin" onclick="lightDayOn()"><i class="wi wi-day-sunny left"></i>Day Light</a>
+      <a class="waves-effect waves-light btn btn-margin"><i class="wi wi-night-alt-cloudy left"></i>Night Light</a>
+      <a class="waves-effect waves-light btn btn-margin"><i class="material-icons left">power_settings_new</i>Pump</a>
+      <a class="waves-effect waves-light btn btn-margin"><i class="material-icons left">power_settings_new</i>Bubble</a>
+    </div>
+    <div class="padding-content"><h4>Piquarium Chem Log</h4></div>
+    <div id="chemical-log-form" class="row">
+      <form class="col s12">
+      <div class="row">
+        <div class="input-field col s3">
+          <i class="material-icons prefix">invert_colors</i>
+          <input id="icon_prefix" type="text" class="validate">
+          <label for="icon_prefix">PH</label>
+        </div>
+        <div class="input-field col s3">
+          <i class="material-icons prefix">invert_colors</i>
+          <input id="icon_telephone" type="tel" class="validate">
+          <label for="icon_telephone">Amonia</label>
+        </div>
+        <div class="input-field col s3">
+          <i class="material-icons prefix">invert_colors</i>
+          <input id="icon_prefix" type="text" class="validate">
+          <label for="icon_prefix">Nitrite</label>
+        </div>
+        <div class="input-field col s3">
+          <i class="material-icons prefix">invert_colors</i>
+          <input id="icon_telephone" type="tel" class="validate">
+          <label for="icon_telephone">Nitrate</label>
+        </div>
+      </div>
+    </form>
+    </div>
     <div id="list-todo" class="padding-content">
       <ul>
         <li>Track whether lights are day or night</li>
@@ -19,11 +61,17 @@
         <li>Feed Fish</li>
         <li>Tempature Reading</li>
         <li>Capture Chemical Readings</li>
-
       </ul>
     </div>
     <!-- <h1><%= title %></h1>
     <p>Welcome to <%= title %></p> -->
     <!-- <i class="wi wi-night-alt-cloudy"></i> -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="/javascripts/materialize.min.js"></script>
+    <script type="text/javascript">
+      lightDayOn = function(){
+        $.get('lightday', function(data){});
+      };
+    </script>
   </body>
 </html>

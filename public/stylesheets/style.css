@@ -16,16 +16,38 @@ a {
   color: #00B7FF;
 }
 
+#btn-toggle-daynight{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.btn-margin{
+  margin-bottom: 10px;
+}
+
 .padding-content{
   padding: 20px;
+}
+
+.centered-content{
+  padding: 20px;
+  text-align: center;
 }
 
 #icon-light-status{
   position: absolute;
   left: 20px;
   top: 20px;
-  font-size: 3em;
-  color: #ccc;
+  font-size: 4em;
+}
+
+.icon-day-color{
+  color: #ffeb3b !important;
+}
+
+.icon-night-color{
+  color: #607d8b;
 }
 
 #list-todo{
@@ -34,11 +56,10 @@ a {
 
 #lbl-temp-reading{
   position: absolute;
-  left: 75px;
+  left: 90px;
   top: 15px;
   font-size: 3em;
   letter-spacing: -5px;
-  color: #ccc;
 }
 
 #vid-tank{
