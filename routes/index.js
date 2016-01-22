@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var dayLen = require('../modules/daylength.js');
-var rfCon = require('../modules/RFController.js');
+var rfCon = require('../modules/rfcontroller.js');
 
 var lightDayOn=false;
 
@@ -14,8 +14,9 @@ router.get('/', function(req, res) {
 router.get('/lightday', function(req, res){
   lightDayOn === true? rfCon.lightDayOff() : rfCon.lightDayOn();
   lightDayOn === true? lightDayOn=false : lightDayOn=true;
-  
+   
   console.log('lightday clicked');
+  res.end();
 });
 
 module.exports = router;
