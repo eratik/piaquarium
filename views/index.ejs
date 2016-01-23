@@ -18,7 +18,7 @@
     </span>
     <div class="padding-content"><h4>Piquarium Cam</h4></div>
     <div id="vid-tank"></div>
-    <div id="lbl-day-lenght" class="centered-content">Sunrise Today: <b><%= sunrise %></b>  Sunset Today: <b><%= sunset %></b></div>
+    <div id="lbl-day-lenght" class="centered-content">Sunrise Today: <b><span id="sunrise-time"></span></b>  Sunset Today: <b><span id="sunset-time"></span></b></div>
     <div id="controls-manual" class="centered-content">
       <a class="waves-effect waves-light btn btn-margin" onclick="lightDayOn()"><i class="wi wi-day-sunny left"></i>Day Light</a>
       <a class="waves-effect waves-light btn btn-margin"><i class="wi wi-night-alt-cloudy left"></i>Night Light</a>
@@ -68,10 +68,33 @@
     <!-- <i class="wi wi-night-alt-cloudy"></i> -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="/javascripts/materialize.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
+      // Local Vars
+      var socket = io.connect('http://localhost:3000');
+
+      // Document Ready
+      $(function(){
+        setDayLength('loading...', 'loading...');
+      });
+
+      // Turn Light On/Off
       lightDayOn = function(){
         $.get('lightday', function(data){});
       };
+      // Set Day Length
+      setDayLength = function(sunrise, sunset){
+        $('#sunrise-time').text(sunrise);
+        $('#sunset-time').text(sunset);
+      };
+
+      // Events
+      socket.on('connect', function(data) {
+          socket.emit('join', 'Hello World from client');
+      });
+      socket.on('daylength',function(data){
+        setDayLength(data.sunrise, data.sunset);
+      });
     </script>
   </body>
 </html>

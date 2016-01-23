@@ -7,3 +7,11 @@ app.set('port', process.env.PORT || 3000);
 var server = app.listen(app.get('port'), function() {
   debug('Express server listening on port ' + server.address().port);
 });
+
+global.io = require('socket.io')(server);
+global.io.on('connection', function(client) {
+    console.log('Client connected...');
+    client.on('join', function(data) {
+        console.log(data);
+    });
+});

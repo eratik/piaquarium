@@ -4,9 +4,7 @@ var rfSend = rpi433.sendCode;
 var RFController = {
   rfDevices: {
     lightday: {on:333107, off:333116},
-    lightnight: {on:333107, off:333116},
-    lightday: {on:333107, off:333116},
-    lightnight: {on:333107, off:333116}
+    lightnight: {on:333251, off:333260}
   },
   sendDeviceCode: function(code){
     rfSend(code, 0, function(error, stdout) {   //Send 1234
