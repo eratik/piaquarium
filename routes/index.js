@@ -14,7 +14,9 @@ router.get('/', function(req, res) {
       res.sendStatus(500);
     }
     else{
-      global.io.emit('daylength', data);
+      setTimeout(function(){
+        global.io.emit('daylength', data);
+      },5000);
     }
   })
   res.render('index', { title: 'Express', sunrise: '5:02am', sunset: '7:02pm' });

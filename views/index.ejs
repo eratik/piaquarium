@@ -2,6 +2,7 @@
 <html>
   <head>
     <title><%= title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/stylesheets/font-awesome-4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/stylesheets/weather-icons-master/css/weather-icons.min.css">
     <!--Import Google Icon Font-->
@@ -17,9 +18,12 @@
       <a class="btn-floating btn-large waves-effect waves-light red"><i class="wi wi-night-alt-cloudy"></i></a>
     </span>
     <div class="padding-content"><h4>Piquarium Cam</h4></div>
-    <div id="vid-tank"></div>
+    <div id="vid-tank">
+      <img id="stream">
+    </div>
     <div id="lbl-day-lenght" class="centered-content">Sunrise Today: <b><span id="sunrise-time"></span></b>  Sunset Today: <b><span id="sunset-time"></span></b></div>
     <div id="controls-manual" class="centered-content">
+      <a id="start" class="waves-effect waves-light btn btn-margin" onclick="startStream()"><i class="wi wi-day-sunny left"></i>Start Stream</a>
       <a class="waves-effect waves-light btn btn-margin" onclick="lightDayOn()"><i class="wi wi-day-sunny left"></i>Day Light</a>
       <a class="waves-effect waves-light btn btn-margin"><i class="wi wi-night-alt-cloudy left"></i>Night Light</a>
       <a class="waves-effect waves-light btn btn-margin"><i class="material-icons left">power_settings_new</i>Pump</a>
@@ -71,7 +75,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
       // Local Vars
-      var socket = io.connect('http://localhost:3000');
+      var socket = io.connect('http://192.168.1.6:3000');
 
       // Document Ready
       $(function(){
@@ -88,12 +92,23 @@
         $('#sunset-time').text(sunset);
       };
 
+      startStream = function() {
+         socket.emit('start-stream');
+         $('#start').hide();
+       }
+
       // Events
       socket.on('connect', function(data) {
           socket.emit('join', 'Hello World from client');
       });
+
       socket.on('daylength',function(data){
         setDayLength(data.sunrise, data.sunset);
+      });
+
+      socket.on('liveStream', function(url) {
+        $('#stream').attr('src', url);
+        $('#start').hide();
       });
     </script>
   </body>
