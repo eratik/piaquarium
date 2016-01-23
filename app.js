@@ -12,7 +12,6 @@ var app = express();
 var fs = require('fs');
 var path = require('path');
 var config = require('config');
-var io = global.io;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -70,7 +69,7 @@ if(cameraEnabled === true){
   var sockets = {};
 
   // On Client Connection
-  io.on('connection', function(socket) {
+  global.io.on('connection', function(socket) {
 
     sockets[socket.id] = socket;
     console.log("Total clients connected : ", Object.keys(sockets).length);
@@ -87,7 +86,7 @@ if(cameraEnabled === true){
     });
 
     socket.on('start-stream', function() {
-      startStreaming(io);
+      startStreaming(global.io);
     });
 
   });
@@ -101,10 +100,10 @@ function stopStreaming() {
   }
 };
 
-function startStreaming(io) {
+function startStreaming(global.io) {
 
   if (app.get('watchingFile')) {
-    io.sockets.emit('liveStream', 'image_stream.jpg?_t=' + (Math.random() * 100000));
+    global.io.sockets.emit('liveStream', 'image_stream.jpg?_t=' + (Math.random() * 100000));
     return;
   }
 
@@ -116,7 +115,7 @@ function startStreaming(io) {
   app.set('watchingFile', true);
 
   fs.watchFile('./stream/image_stream.jpg', function(current, previous) {
-    io.sockets.emit('liveStream', 'image_stream.jpg?_t=' + (Math.random() * 100000));
+    global.io.sockets.emit('liveStream', 'image_stream.jpg?_t=' + (Math.random() * 100000));
   })
 
 };
