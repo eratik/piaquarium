@@ -100,10 +100,10 @@ function stopStreaming() {
   }
 };
 
-function startStreaming(global.io) {
+function startStreaming(io) {
 
   if (app.get('watchingFile')) {
-    global.io.sockets.emit('liveStream', 'image_stream.jpg?_t=' + (Math.random() * 100000));
+    io.sockets.emit('liveStream', 'image_stream.jpg?_t=' + (Math.random() * 100000));
     return;
   }
 
@@ -115,7 +115,7 @@ function startStreaming(global.io) {
   app.set('watchingFile', true);
 
   fs.watchFile('./stream/image_stream.jpg', function(current, previous) {
-    global.io.sockets.emit('liveStream', 'image_stream.jpg?_t=' + (Math.random() * 100000));
+    io.sockets.emit('liveStream', 'image_stream.jpg?_t=' + (Math.random() * 100000));
   })
 
 };
