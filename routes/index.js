@@ -5,6 +5,7 @@ var rfCon = require('../modules/rfcontroller.js');
 var db = require('../modules/database.js');
 
 var lightDayOn=false;
+var lightNightOn=false;
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -37,7 +38,12 @@ router.get('/daylength', function(req, res){
 router.get('/lightday', function(req, res){
   lightDayOn === true? rfCon.lightDayOff() : rfCon.lightDayOn();
   lightDayOn === true? lightDayOn=false : lightDayOn=true;
-  console.log('lightday clicked');
+  res.end();
+});
+
+router.get('/lightnight', function(req, res){
+  lightNightOn === true? rfCon.lightDayOff() : rfCon.lightDayOn();
+  lightNightOn === true? lightNightOn=false : lightNightOn=true;
   res.end();
 });
 

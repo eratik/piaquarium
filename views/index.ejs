@@ -23,9 +23,9 @@
     </div>
     <div id="lbl-day-lenght" class="centered-content">Sunrise Today: <b><span id="sunrise-time"></span></b>  Sunset Today: <b><span id="sunset-time"></span></b></div>
     <div id="controls-manual" class="centered-content">
-      <a id="start" class="waves-effect waves-light btn btn-margin" onclick="startStream()"><i class="wi wi-day-sunny left"></i>Start Stream</a>
+      <a id="start" class="waves-effect waves-light btn btn-margin" onclick="toggleStream()"><i class="wi wi-day-sunny left"></i>Stream Video</a>
       <a class="waves-effect waves-light btn btn-margin" onclick="lightDayOn()"><i class="wi wi-day-sunny left"></i>Day Light</a>
-      <a class="waves-effect waves-light btn btn-margin"><i class="wi wi-night-alt-cloudy left"></i>Night Light</a>
+      <a class="waves-effect waves-light btn btn-margin" onclick="lightNightOn()"><i class="wi wi-night-alt-cloudy left"></i>Night Light</a>
       <a class="waves-effect waves-light btn btn-margin"><i class="material-icons left">power_settings_new</i>Pump</a>
       <a class="waves-effect waves-light btn btn-margin"><i class="material-icons left">power_settings_new</i>Bubble</a>
     </div>
@@ -76,6 +76,7 @@
     <script type="text/javascript">
       // Local Vars
       var socket = io.connect('http://192.168.1.21:3000');
+      var isStreaming = false;
 
       // Document Ready
       $(function(){
@@ -86,15 +87,22 @@
       lightDayOn = function(){
         $.get('lightday', function(data){});
       };
+
+      // Turn Light On/Off
+      lightNightOn = function(){
+        $.get('lightnight', function(data){});
+      };
+
       // Set Day Length
       setDayLength = function(sunrise, sunset){
         $('#sunrise-time').text(sunrise);
         $('#sunset-time').text(sunset);
       };
 
-      startStream = function() {
-         socket.emit('start-stream');
-         $('#start').hide();
+      // Toggle Start Stop
+      toggleStream = function() {
+        isStreaming === true ? isStreaming=false: isStreaming = true;
+        isStreaming === true ? socket.emit('stop-stream') : socket.emit('start-stream');
        }
 
       // Events
@@ -107,8 +115,11 @@
       });
 
       socket.on('liveStream', function(url) {
+        // If already streaming set to true
+        if(isStreaming === false)
+          isStreaming = true;
+
         $('#stream').attr('src', url);
-        $('#start').hide();
       });
     </script>
   </body>

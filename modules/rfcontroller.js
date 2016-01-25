@@ -22,9 +22,11 @@ var RFController = {
     this.sendDeviceCode(this.rfDevices.lightday.off);
   },
   lightNightOn: function(){
+    console.log('light night on called');
     this.sendDeviceCode(this.rfDevices.lightnight.on);
   },
   lightNightOff: function(){
+    console.log('light night of called');
     this.sendDeviceCode(this.rfDevices.lightnight.off);
   }
 };

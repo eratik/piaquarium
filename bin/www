@@ -50,6 +50,10 @@ if(cameraEnabled === true){
       startStreaming(global.io);
     });
 
+    socket.on('stop-stream', function() {
+      stopStreaming();
+    });
+
   });
 };
 
@@ -68,7 +72,7 @@ function startStreaming(io) {
     return;
   }
 
-  var args = ["-w", "640", "-h", "480", "-o", "./public/images/image_stream.jpg", "-t", "999999999", "-tl", "100"];
+  var args = ["-w", "480", "-h", "240", "-o", "./public/images/image_stream.jpg", "-t", "999999999", "-tl", "100"];
   proc = spawn('raspistill', args);
 
   console.log('Watching for changes...');
