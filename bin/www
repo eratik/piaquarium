@@ -11,11 +11,14 @@ var server = app.listen(app.get('port'), function() {
   debug('Express server listening on port ' + server.address().port);
 });
 
+// Add Socket.IO to global namespace
 global.io = require('socket.io')(server);
 
+// Get Camera Enabled Setting from Config
 var cameraEnabled = config.get('camera.enabled');
 console.log('Camera Enabled: ' + cameraEnabled);
 
+// If there's a camera then spawn a process
 if(cameraEnabled === true){
   var spawn = require('child_process').spawn;
   var proc;
@@ -52,6 +55,7 @@ if(cameraEnabled === true){
   });
 };
 
+// Stop Streaming
 function stopStreaming() {
   //if (Object.keys(sockets).length == 0) {
     app.set('watchingFile', false);
@@ -60,22 +64,23 @@ function stopStreaming() {
   //}
 };
 
+// Start Streaming
 function startStreaming(io) {
-
   if (app.get('watchingFile')) {
     io.sockets.emit('liveStream', '/images/image_stream.jpg?_t=' + (Math.random() * 100000));
     return;
-  }
+  };
 
+  // Kick of Raspistill
   var args = ["-w", "480", "-h", "240", "-o", "./public/images/image_stream.jpg", "-t", "999999999", "-tl", "100"];
   proc = spawn('raspistill', args);
 
   console.log('Watching for changes...');
-
   app.set('watchingFile', true);
 
+  // Watch changes on the file Raspistill is changing
   fs.watchFile('./public/images/image_stream.jpg', function(current, previous) {
     io.sockets.emit('liveStream', '/images/image_stream.jpg?_t=' + (Math.random() * 100000));
-  })
+  });
 
 };
