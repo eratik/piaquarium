@@ -64,6 +64,13 @@ a {
 
 #vid-tank{
   width: 100%;
-  height: 200px;
+  height: 240px;
+  padding: 0;
   background-color: #eee;
+  text-align: center;
+}
+
+#stream{
+  max-height: 240px;
+  height: 240px;
 }
