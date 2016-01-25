@@ -4,7 +4,7 @@ var app = require('../app');
 var fs = require('fs');
 var path = require('path');
 var config = require('config');
-var scheduler = require('./modules/scheduler.js');
+var scheduler = require('../modules/scheduler.js');
 
 app.set('port', process.env.PORT || 3000);
 
