@@ -1,3 +1,4 @@
+var schedule = require("node-schedule");
 var rfCon = require("./rfcontroller.js");
 
 (function(){
