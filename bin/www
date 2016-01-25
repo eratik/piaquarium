@@ -12,12 +12,6 @@ var server = app.listen(app.get('port'), function() {
 });
 
 global.io = require('socket.io')(server);
-// global.io.on('connection', function(client) {
-//     console.log('Client connected...');
-//     client.on('join', function(data) {
-//         console.log(data);
-//     });
-// });
 
 var cameraEnabled = config.get('camera.enabled');
 console.log('Camera Enabled: ' + cameraEnabled);
@@ -51,6 +45,7 @@ if(cameraEnabled === true){
     });
 
     socket.on('stop-stream', function() {
+      console.log('Stop Stream Socket Handled...');
       stopStreaming();
     });
 
@@ -58,11 +53,11 @@ if(cameraEnabled === true){
 };
 
 function stopStreaming() {
-  if (Object.keys(sockets).length == 0) {
+  //if (Object.keys(sockets).length == 0) {
     app.set('watchingFile', false);
     if (proc) proc.kill();
     fs.unwatchFile('./public/images/image_stream.jpg');
-  }
+  //}
 };
 
 function startStreaming(io) {
