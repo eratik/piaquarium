@@ -102,7 +102,7 @@
       // Toggle Start Stop
       toggleStream = function() {
         isStreaming === true ? isStreaming=false: isStreaming = true;
-        isStreaming === true ? socket.emit('stop-stream') : socket.emit('start-stream');
+        isStreaming === false ? socket.emit('stop-stream') : socket.emit('start-stream');
        }
 
       // Events

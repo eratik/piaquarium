@@ -42,7 +42,7 @@ router.get('/lightday', function(req, res){
 });
 
 router.get('/lightnight', function(req, res){
-  lightNightOn === true? rfCon.lightDayOff() : rfCon.lightDayOn();
+  lightNightOn === true? rfCon.lightNightOff() : rfCon.lightNightOn();
   lightNightOn === true? lightNightOn=false : lightNightOn=true;
   res.end();
 });
