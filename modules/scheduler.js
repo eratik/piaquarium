@@ -1,4 +1,4 @@
-var rfCon = require("rfcontroller.js");
+var rfCon = require("./rfcontroller.js");
 
 (function(){
     // Second, Min, Hour, Month, Day Of Week
