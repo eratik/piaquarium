@@ -3,7 +3,7 @@ var rfCon = require("./rfcontroller.js");
 
 (function(){
     // Second, Min, Hour, Month, Day Of Week
-  var sunriseJob = schedule.scheduleJob('00 00 07 * * *', function(){
+  var sunriseJob = schedule.scheduleJob('0 0 7 * * *', function(){
       console.log('Sunrise Schedule Fired');
       rfCon.lightNightOff();
       // Debounce
@@ -12,7 +12,7 @@ var rfCon = require("./rfcontroller.js");
       },1000);
   });
 
-  var sunsetJob = schedule.scheduleJob('00 30 17 * * *', function(){
+  var sunsetJob = schedule.scheduleJob('0 10 20 * * *', function(){
     console.log('Sunset Schedule Fired');
     rfCon.lightDayOff();
     // Debounce
