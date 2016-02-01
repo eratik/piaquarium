@@ -31,27 +31,27 @@
     </div>
     <div class="padding-content"><h4>Piquarium Chem Log</h4></div>
     <div id="chemical-log-form" class="row">
-      <form class="col s12">
+      <form class="col s12" action="javascript:logChemicals();">
       <div class="row">
         <div class="input-field col s3">
           <i class="material-icons prefix">invert_colors</i>
-          <input id="icon_prefix" type="text" class="validate">
-          <label for="icon_prefix">PH</label>
+          <input id="ph" type="text" class="validate">
+          <label for="ph">PH</label>
         </div>
         <div class="input-field col s3">
           <i class="material-icons prefix">invert_colors</i>
-          <input id="icon_telephone" type="tel" class="validate">
-          <label for="icon_telephone">Amonia</label>
+          <input id="amonia" type="tel" class="validate">
+          <label for="amonia">Amonia</label>
         </div>
         <div class="input-field col s3">
           <i class="material-icons prefix">invert_colors</i>
-          <input id="icon_prefix" type="text" class="validate">
-          <label for="icon_prefix">Nitrite</label>
+          <input id="nitrite" type="text" class="validate">
+          <label for="nitrite">Nitrite</label>
         </div>
         <div class="input-field col s3">
           <i class="material-icons prefix">invert_colors</i>
-          <input id="icon_telephone" type="tel" class="validate">
-          <label for="icon_telephone">Nitrate</label>
+          <input id="nitrate" type="tel" class="validate" onblur="submit();">
+          <label for="nitrate">Nitrate</label>
         </div>
       </div>
     </form>
@@ -97,6 +97,20 @@
       setDayLength = function(sunrise, sunset){
         $('#sunrise-time').text(sunrise);
         $('#sunset-time').text(sunset);
+      };
+
+      // Log Chemicals
+      logChemicals = function(){
+        var ph = $('#ph').val();
+        var amonia = $('#amonia').val();
+        var nitrite = $('#nitrite').val();
+        var nitrate = $('#nitrate').val();
+
+        if(ph == '' || amonia == '' || nitrite == '' || nitrate == ''){
+          alert('All chemicals are required');
+          return;
+        };
+        $.post('chemicals', {'ph':ph, 'amonia': amonia, 'nitrite': nitrite, 'nitrate': nitrate}, function(res){});
       };
 
       // Toggle Start Stop

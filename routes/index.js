@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var moment = require('moment');
 var dayLen = require('../modules/daylength.js');
 var rfCon = require('../modules/rfcontroller.js');
 var db = require('../modules/database.js');
@@ -47,9 +48,20 @@ router.get('/lightnight', function(req, res){
   res.end();
 });
 
+router.post('/chemicals', function(req, res){
+  var data = req.body;
+  data.chemdate = moment(Date.now()).format('M/D/YY h:mma');
+  db.add(data);
+  console.log(data);
+  res.status(200).end();
+  //res.json(db.getall());
+});
+
 router.get('/chemicals', function(req, res){
-  db.add({now: Date.now(), ph: 12, amonia: 34, nitrite: 56, nitrate: 78});
-  res.json(db.getall());
+  //db.add({now: Date.now(), ph: 12, amonia: 34, nitrite: 56, nitrate: 78});
+  db.getall(function(err, data){
+    res.json(data);
+  })
 });
 
 module.exports = router;
