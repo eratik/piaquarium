@@ -1,14 +1,15 @@
 var pouch = require('pouchdb');
 var db = new pouch('chemicals');
+var logger = require('./logger.js');
 
 // Add a collection to the database
 
 var ChemicalReadings = {
   add:  function(reading){
     db.post(reading).then(function(res){
-      console.log(res);
+      logger.info(res);
     }).catch(function(err){
-      console.log(err);
+      logger.error(err);
     });
   },
   getall: function(callback){
@@ -17,10 +18,10 @@ var ChemicalReadings = {
       include_docs: true,
       attachments: true
     }).then(function (result) {
-      console.log(result);
+      logger.info(result);
       callback(null, result.rows.reverse());
     }).catch(function (err) {
-      console.log(err);
+      logger.error(err);
       return callback(err, []);
     });
   }

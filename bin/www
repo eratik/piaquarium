@@ -5,19 +5,23 @@ var fs = require('fs');
 var path = require('path');
 var config = require('config');
 var scheduler = require('../modules/scheduler.js');
+var logger = require('../modules/logger.js');
 
 app.set('port', process.env.PORT || 3000);
 
+logger.error('This is a test');
+
 var server = app.listen(app.get('port'), function() {
-  debug('Express server listening on port ' + server.address().port);
+  logger.info('Express server listening on port ' + server.address().port);
 });
 
 // Add Socket.IO to global namespace
 global.io = require('socket.io')(server);
 
+
 // Get Camera Enabled Setting from Config
 var cameraEnabled = config.get('camera.enabled');
-console.log('Camera Enabled: ' + cameraEnabled);
+logger.info('Camera Enabled: ' + cameraEnabled);
 
 // If there's a camera then spawn a process
 if(cameraEnabled === true){
@@ -31,7 +35,7 @@ if(cameraEnabled === true){
   global.io.on('connection', function(socket) {
 
     sockets[socket.id] = socket;
-    console.log("Total clients connected : ", Object.keys(sockets).length);
+    logger.info("Total clients connected : " + Object.keys(sockets).length);
 
     socket.on('disconnect', function() {
       delete sockets[socket.id];
@@ -49,7 +53,7 @@ if(cameraEnabled === true){
     });
 
     socket.on('stop-stream', function() {
-      console.log('Stop Stream Socket Handled...');
+      logger.info('Stop Stream Socket Handled...');
       stopStreaming();
     });
 
@@ -76,7 +80,7 @@ function startStreaming(io) {
   var args = ["-w", "480", "-h", "240", "-o", "./public/images/image_stream.jpg", "-t", "999999999", "-tl", "100"];
   proc = spawn('raspistill', args);
 
-  console.log('Watching for changes...');
+  logger.info('Watching for changes...');
   app.set('watchingFile', true);
 
   // Watch changes on the file Raspistill is changing

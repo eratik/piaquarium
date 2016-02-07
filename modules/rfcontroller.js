@@ -1,5 +1,6 @@
 var rpi433 = require('rpi-433');
 var rfSend = rpi433.sendCode;
+var logger = require('./logger.js');
 
 var RFController = {
   rfDevices: {
@@ -8,25 +9,25 @@ var RFController = {
   },
   sendDeviceCode: function(code){
     rfSend(code, 0, function(error, stdout) {   //Send 1234
-      if(!error) console.log('Device Signal Sent: ' + stdout); //Should display 1234
+      if(!error) logger.info('Device Signal Sent: ' + stdout); //Should display 1234
       else
-       console.log(error);
+       logger.error(error);
     });
   },
   lightDayOn: function(){
-    console.log('light day on called');
+    logger.info('light day on called');
     this.sendDeviceCode(this.rfDevices.lightday.on);
   },
   lightDayOff: function(){
-    console.log('light day off called');
+    logger.info('light day off called');
     this.sendDeviceCode(this.rfDevices.lightday.off);
   },
   lightNightOn: function(){
-    console.log('light night on called');
+    logger.info('light night on called');
     this.sendDeviceCode(this.rfDevices.lightnight.on);
   },
   lightNightOff: function(){
-    console.log('light night of called');
+    logger.info('light night of called');
     this.sendDeviceCode(this.rfDevices.lightnight.off);
   }
 };

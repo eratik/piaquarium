@@ -1,6 +1,7 @@
 var http = require('http');
 var moment = require('moment');
 var tz = require('moment-timezone');
+var logger = require('./logger.js');
 
 var daylengthURL = 'http://api.sunrise-sunset.org/json?lat=34.274647&lng=-119.229034&formatted=0';
 var timezone = 'America/Los_Angeles';
@@ -29,7 +30,7 @@ var DayLength = {
 
     }).on('error', function(e){
       callback(e, null);
-      console.log(e);
+      logger.error(e);
     });
   }
 }

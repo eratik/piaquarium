@@ -1,10 +1,11 @@
 var schedule = require("node-schedule");
 var rfCon = require("./rfcontroller.js");
+var logger = require('./logger.js');
 
 (function(){
     // Second, Min, Hour, Month, Day Of Week
   var sunriseJob = schedule.scheduleJob('0 0 7 * * *', function(){
-      console.log('Sunrise Schedule Fired');
+      logger.info('Sunrise Schedule Fired');
       rfCon.lightNightOff();
       // Debounce
       setTimeout(function(){
@@ -13,7 +14,7 @@ var rfCon = require("./rfcontroller.js");
   });
 
   var sunsetJob = schedule.scheduleJob('0 10 20 * * *', function(){
-    console.log('Sunset Schedule Fired');
+    logger.info('Sunset Schedule Fired');
     rfCon.lightDayOff();
     // Debounce
     setTimeout(function(){
